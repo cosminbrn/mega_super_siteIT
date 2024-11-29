@@ -1,0 +1,271 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    display: block;
+}
+
+header {
+    background-color: #00296B;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+header .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-right: auto;
+}
+
+header .nav-links {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 20px; /* Increase padding for a bigger section */
+    background-color: #f0f0f0;
+    background-image: url('src/assets/images/Mesa\ de\ trabajo\ 1\ 1.png'); /* Add this line */
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat; 
+    height: 600px; /* Set a specific height for the hero section */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.it-logo {
+    color: #00A651;
+}
+
+.nav-button {
+    background: linear-gradient(135deg, #47fb65, #600dc5); 
+    color: white;
+    border: none;
+    padding: 10px 20px; 
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 25px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s; 
+}
+
+.nav-button:hover {
+    background: linear-gradient(135deg, #ecebeb, #f8f8f8); 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
+    color: #00296B;
+}
+
+.nav-button:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.5); /* Add custom focus outline */
+}
+
+header nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.fancy-button {
+    background: linear-gradient(135deg, #6e8efb, #a777e3); 
+    color: white;
+    border: none;
+    padding: 10px 20px; 
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 25px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s; 
+}
+
+.fancy-button:hover {
+    background: linear-gradient(135deg, #f3f1f6, #f2f2f5);
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
+    color: #00296B;
+}
+
+.fancy-button:focus {
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(145, 124, 238, 0.5);
+}
+
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f0f0f0;
+}
+
+.top-rated {
+    text-align: center;
+    background-color: #00296B;
+    color: white;
+    padding: 30px 20px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.social-icon {
+    width: 30px;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+.recipes {
+    display: flex;
+    justify-content: center;
+}
+
+.recipe-card {
+    background-color: white;
+    color: #00296B;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.contact {
+    padding: 50px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0); /* Gradient background */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: 50px auto; /* Add some margin to separate from other sections */
+    position: relative;
+    overflow: hidden;
+}
+
+
+.contact h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #00296B;
+    position: relative;
+    z-index: 1;
+}
+
+
+.contact::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+    z-index: 0;
+}
+
+.contact::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+    z-index: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    z-index: 1;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+form input:focus, form textarea:focus {
+    border-color: #00A651;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 166, 81, 0.5);
+}
+
+.submit-button {
+    background-color: #00A651;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #007a3d;
+    transform: translateY(-2px);
+}
+
+.submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.5);
+}
+
+form input, form textarea {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+form button {
+    background-color: #00A651;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #00296B;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+footer img {
+    width: 30px;
+    margin: 0 10px;
+}

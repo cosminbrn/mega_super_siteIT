@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="A Vite + React application" />
+    <meta name="keywords" content="Vite, React, JavaScript" />
+    <meta name="author" content="Baroana Cosmin George" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>Vite + React</title>
+    <link rel="stylesheet" href="/src/index.css" />
+    <link rel="stylesheet" href="/styles.css" /> <!-- Added this line -->
+  </head>
+  <body>
+    <header>
+      <div class="nav-container">
+          <img src="src/assets/images/logo.png" alt="Logo" class="logo">
+          <nav class="nav-links">
+              <a href="#" class="nav-button">Recipes</a>
+              <a href="#" class="nav-button">Add Recipe</a>
+          </nav>
+          <div class="auth-buttons">
+              <button class="fancy-button">Login</button>
+              <button class="fancy-button">Register</button>
+          </div>
+      </div>
+  </header>
+
+    <section class="hero">
+        <img src="src/assets/images/Group 90.png" alt="Chef">
+    </section>
+
+    <section class="top-rated">
+        <h2>Top rated recipes</h2>
+        <div class="recipes">
+            <div class="recipe-card">
+                <img src="src/assets/images/Soup.png" alt="Soup">
+                <h3>Supa la plic</h3>
+                <p>★★★★★</p>
+                <p class="author">Author: Mari</p>
+            </div>
+            <div class="recipe-card">
+                <img src="src/assets/images/Bread.png" alt="Bread">
+                <h3>Paine cu pateu</h3>
+                <p>★★★★★</p>
+                <p class="author">Author: Croi</p>
+            </div>
+            <div class="recipe-card">
+                <img src="src/assets/images/Fries.png" alt="Fries">
+                <h3>Cartofi prăjiți</h3>
+                <p>★★★★★</p>
+                <p class="author">Author: Edi</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+      <h2>Contact us</h2>
+      <form>
+          <div class="form-group">
+              <input type="text" placeholder="First Name" required>
+          </div>
+          <div class="form-group">
+              <input type="text" placeholder="Last Name" required>
+          </div>
+          <div class="form-group">
+              <input type="email" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+              <textarea placeholder="Message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit-button">Submit</button>
+      </form>
+  </section>
+
+    <footer>
+        <div class="social-icons">
+            <!-- Placeholder for social media icons -->
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer"><img src="src/assets/images/instagram.png" alt="Instagram" class="social-icon"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer"><img src="src/assets/images/facebook.png" alt="Facebook" class="social-icon"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer"><img src="src/assets/images/youtube.png" alt="YouTube" class="social-icon"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer"><img src="src/assets/images/twitch.png" alt="Twitch" class="social-icon"></a>
+        </div>
+    </footer>
+</body>
+</html>
