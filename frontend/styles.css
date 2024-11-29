@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #fff;
+    background-color: white;
     display: block;
 }
 
@@ -47,6 +47,117 @@ header .nav-links {
     display: flex;
     justify-content: center;
     align-items: center;
+    
+}
+
+.login-container {
+    background-color: #003f88; 
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    margin-left: 200px; 
+    margin-right: 200px
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.login-form .form-group {
+    margin-bottom: 15px;
+}
+
+.info-container {
+    background-color: #0f6dd8; 
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    margin-left: 200px; 
+    margin-right: 200px
+}
+
+.info-container h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.info-form .form-group {
+    margin-bottom: 15px;
+}
+
+.info-group {
+    background-color: #003f88; /* Slightly lighter dark blue */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    color: white; 
+}
+
+.info-group .form-group {
+    margin-bottom: 15px;
+}
+
+.info-group input {
+    width: 100%;
+    padding: 10px 10px 10px 0;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background: none;
+    font-size: 1em;
+    box-sizing: border-box;
+    color: white; /* Adjust color as needed */
+}
+
+.info-group input:focus {
+    border-bottom-color: #00A651;
+    outline: none;
+    box-shadow: none;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px 10px 10px 0;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background: none;
+    font-size: 1em;
+    box-sizing: border-box;
+    color: white; /* Adjust color as needed */
+}
+
+.login-form input:focus {
+    border-color: #00A651;
+    outline: none;
+    box-shadow: none;
+}
+
+.login-button {
+    background-color: #00A651;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+}
+
+.login-button:hover {
+    background-color: #007a3d;
+    transform: translateY(-2px);
+}
+
+.login-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.5);
 }
 
 .it-logo {
@@ -54,61 +165,71 @@ header .nav-links {
 }
 
 .nav-button {
-    background: linear-gradient(135deg, #47fb65, #600dc5); 
+    background: linear-gradient(135deg, #00A651, #00509E); /* Green to Lighter Blue gradient */
     color: white;
     border: none;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     cursor: pointer;
     margin-left: 10px;
-    border-radius: 25px; 
-    font-size: 16px; 
-    font-weight: bold; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    transition: background 0.3s, transform 0.3s, box-shadow 0.3s; 
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .nav-button:hover {
-    background: linear-gradient(135deg, #ecebeb, #f8f8f8); 
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
-    color: #00296B;
+    background: linear-gradient(135deg, #00509E, #00A651); /* Lighter Blue to Green gradient */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    color: #FF6F61; /* Coral color on hover */
 }
 
 .nav-button:focus {
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.5); /* Add custom focus outline */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); /* Coral focus outline */
 }
 
 header nav a {
     color: white;
     margin: 0 15px;
     text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #FF6F61; /* Coral color on hover */
 }
 
 .fancy-button {
-    background: linear-gradient(135deg, #6e8efb, #a777e3); 
+    background: linear-gradient(135deg, #6e8efb, #a777e3); /* Light Blue to Purple gradient */
     color: white;
     border: none;
-    padding: 10px 20px; 
+    padding: 10px 20px;
     cursor: pointer;
     margin-left: 10px;
-    border-radius: 25px; 
-    font-size: 16px; 
-    font-weight: bold; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    transition: background 0.3s, transform 0.3s, box-shadow 0.3s; 
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .fancy-button:hover {
-    background: linear-gradient(135deg, #f3f1f6, #f2f2f5);
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
-    color: #00296B;
+    background: linear-gradient(135deg, #f3f1f6, #f2f2f5); /* Light Gray gradient */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    color: #00296B; /* Dark Blue color on hover */
 }
 
 .fancy-button:focus {
-    outline: none; 
-    box-shadow: 0 0 0 3px rgba(145, 124, 238, 0.5);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.5); /* Light Blue focus outline */
 }
 
 .hero {
@@ -154,7 +275,7 @@ header nav a {
 .contact {
     padding: 50px 20px;
     text-align: center;
-    background: linear-gradient(135deg, #f0f0f0, #e0e0e0); /* Gradient background */
+    background: linear-gradient(135deg, white, white); /* Gradient background */
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     max-width: 600px;
