@@ -37,13 +37,13 @@ header .nav-links {
 
 .hero {
     text-align: center;
-    padding: 100px 20px; /* Increase padding for a bigger section */
+    padding: 100px 20px; 
     background-color: #f0f0f0;
-    background-image: url('src/assets/images/Mesa\ de\ trabajo\ 1\ 1.png'); /* Add this line */
+    background-image: url('src/assets/images/Mesa\ de\ trabajo\ 1\ 1.png'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat; 
-    height: 600px; /* Set a specific height for the hero section */
+    height: 600px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,7 +91,7 @@ header .nav-links {
 }
 
 .info-group {
-    background-color: #003f88; /* Slightly lighter dark blue */
+    background-color: #003f88; 
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -111,7 +111,7 @@ header .nav-links {
     background: none;
     font-size: 1em;
     box-sizing: border-box;
-    color: white; /* Adjust color as needed */
+    color: white; 
 }
 
 .info-group input:focus {
@@ -128,7 +128,7 @@ header .nav-links {
     background: none;
     font-size: 1em;
     box-sizing: border-box;
-    color: white; /* Adjust color as needed */
+    color: white; 
 }
 
 .login-form input:focus {
@@ -165,7 +165,7 @@ header .nav-links {
 }
 
 .nav-button {
-    background: linear-gradient(135deg, #00A651, #00509E); /* Green to Lighter Blue gradient */
+    background: linear-gradient(135deg, #00A651, #00509E); 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -181,15 +181,15 @@ header .nav-links {
 }
 
 .nav-button:hover {
-    background: linear-gradient(135deg, #00509E, #00A651); /* Lighter Blue to Green gradient */
+    background: linear-gradient(135deg, #00509E, #00A651); 
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    color: #FF6F61; /* Coral color on hover */
+    color: #FF6F61; 
 }
 
 .nav-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); /* Coral focus outline */
+    box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); 
 }
 
 header nav a {
@@ -201,11 +201,11 @@ header nav a {
 }
 
 header nav a:hover {
-    color: #FF6F61; /* Coral color on hover */
+    color: #FF6F61; 
 }
 
 .fancy-button {
-    background: linear-gradient(135deg, #6e8efb, #a777e3); /* Light Blue to Purple gradient */
+    background: linear-gradient(135deg, #6e8efb, #a777e3); 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -221,15 +221,15 @@ header nav a:hover {
 }
 
 .fancy-button:hover {
-    background: linear-gradient(135deg, #f3f1f6, #f2f2f5); /* Light Gray gradient */
+    background: linear-gradient(135deg, #f3f1f6, #f2f2f5); 
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    color: #00296B; /* Dark Blue color on hover */
+    color: #00296B; 
 }
 
 .fancy-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.5); /* Light Blue focus outline */
+    box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.5); 
 }
 
 .hero {
@@ -275,11 +275,11 @@ header nav a:hover {
 .contact {
     padding: 50px 20px;
     text-align: center;
-    background: linear-gradient(135deg, white, white); /* Gradient background */
+    background: linear-gradient(135deg, white, white); 
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     max-width: 600px;
-    margin: 50px auto; /* Add some margin to separate from other sections */
+    margin: 50px auto; 
     position: relative;
     overflow: hidden;
 }
