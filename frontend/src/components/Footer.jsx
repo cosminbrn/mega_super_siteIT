@@ -5,20 +5,24 @@ import youtube from '../assets/images/youtube.png';
 import twitch from '../assets/images/twitch.png';
 
 function Footer() {
+  // Cea mai importanta variabila, const, whatever, din tot proiectul
+  /* <3 */ const rickroll = `https://www.youtube.com/watch?v=dQw4w9WgXcQ`; // <3
+  /* <3 <3 <3 <3 <3<3<3<3<3<3 */
+
   const currentYear = new Date().getFullYear();
   return (
     <footer className="footer">
       <div className="social-icons">
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+        <a href={rickroll} target="_blank" rel="noopener noreferrer">
           <img src={instagram} alt="Instagram" className="social-icon" />
         </a>
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+        <a href={rickroll} target="_blank" rel="noopener noreferrer">
           <img src={facebook} alt="Facebook" className="social-icon" />
         </a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+        <a href={rickroll} target="_blank" rel="noopener noreferrer">
           <img src={youtube} alt="YouTube" className="social-icon" />
         </a>
-        <a href="https://www.twitch.tv/" target="_blank" rel="noopener noreferrer">
+        <a href={rickroll} target="_blank" rel="noopener noreferrer">
           <img src={twitch} alt="Twitch" className="social-icon" />
         </a>
       </div>

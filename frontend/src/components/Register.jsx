@@ -3,6 +3,7 @@ import person from '../assets/images/person.png';
 import telephone from '../assets/images/phone.png';
 import email from '../assets/images/mail.png';
 import lock from '../assets/images/lock.png';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,10 @@ function Register() {
     password: '',
     confirmPassword: '',
   });
+  const [isLoading, setIsLoading] = useState(false);  // Added state for loading
+  const [error, setError] = useState(''); // Added state for error handling
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,13 +29,13 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       return;
     }
 
-    console.log('Sending data:', formData);
+    setIsLoading(true); // Set loading state to true
+    setError(''); // Reset previous errors
 
     try {
       const response = await fetch('http://localhost:3000/user', {
@@ -43,19 +48,22 @@ function Register() {
 
       console.log('Response status:', response.status); 
 
-
       if (!response.ok) {
         const errorData = await response.text(); 
         console.error('Error:', errorData);
-        throw new Error(errorData || 'Registration failed');
+        setError('Registration failed: ' + (errorData || 'Please try again.'));
+        setIsLoading(false);
+        return;
       }
 
-      const data = await response.json(); // Fa chestia care vine in JaSON
+      const data = await response.json(); // Get response data
       console.log('Registration successful:', data);
-      alert('User registered successfully!');
+      navigate('/signin.html'); // Navigate to the login page after successful registration
     } catch (error) {
       console.error('There was an error registering the user:', error.message);
-      alert('Failed to register user. Please try again.');
+      setError('Failed to register user. Please try again.');
+    } finally {
+      setIsLoading(false); // Set loading state to false
     }
   };
 
@@ -64,6 +72,9 @@ function Register() {
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="label-container">Jenant... Fa-ti cont mai repede...</h1>
+
+          {/* Error display */}
+          {error && <div className="error-message">{error}</div>}
 
           <div className="form-group">
             <label className="label-container">Username:</label>
@@ -74,6 +85,7 @@ function Register() {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -87,6 +99,7 @@ function Register() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -100,6 +113,7 @@ function Register() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -113,6 +127,7 @@ function Register() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -126,11 +141,14 @@ function Register() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
 
-          <button type="submit">Sign Up</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Signing Up...' : 'Sign Up'}
+          </button>
         </form>
       </div>
     </section>

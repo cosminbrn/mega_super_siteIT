@@ -1,10 +1,12 @@
 
 import React from 'react';
 
+import Info from '../components/Info';
+
 function Profile() {
   return (
     <div>
-      <h1>Profile</h1>
+      <Info />
     </div>
   );
 }
