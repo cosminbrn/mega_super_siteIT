@@ -21,8 +21,8 @@
               <a href="#" class="nav-button">Recipes</a>
               <a href="#" class="nav-button">Add Recipe</a>
           </nav>
-          <div class="auth-buttons">
-              <a href="index.html" class="fancy-button">Logout</a>
+          <div class="auth-buttons" id="auth-buttons">
+              <!-- Buttons will be dynamically added here -->
           </div>
       </div>
   </header>
@@ -46,6 +46,31 @@
                 <strong>Group:</strong> 313CA
             </div>
     </div>
+    <div class="auth-buttons" style="display: flex; justify-content: center; margin-top: 20px;">
+        <a href="addreci.html" class="fancy-button">Add Recipe</a>
+    </div>
     </section>
-</body>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const authButtons = document.getElementById('auth-buttons');
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+        if (isLoggedIn) {
+          authButtons.innerHTML = `
+            <a href="profile.html" class="fancy-button">Profile</a>
+            <a href="index.html" class="fancy-button" id="logout-button">Logout</a>
+          `;
+          document.getElementById('logout-button').addEventListener('click', () => {
+            localStorage.setItem('isLoggedIn', 'false');
+          });
+        } else {
+          authButtons.innerHTML = `
+            <a href="signin.html" class="fancy-button">Login</a>
+            <a href="signup.html" class="fancy-button">Register</a>
+          `;
+        }
+      });
+    </script>
+  </body>
 </html>

@@ -1,0 +1,11 @@
+
+.form-group {
+  display: flex;
+  align-items: center;
+}
+.form-group img {
+  margin-right: 10px;
+}
+.form-group input {
+  flex: 1;
+}

@@ -5,51 +5,12 @@
     <meta name="description" content="A Vite + React application" />
     <meta name="keywords" content="Vite, React, JavaScript" />
     <meta name="author" content="Baroana Cosmin George" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <title>Vite + React</title>
-    <link rel="stylesheet" href="/src/index.css" />
-    <link rel="stylesheet" href="/styles.css" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <header>
-      <div class="nav-container">
-          <a href="index.html">
-              <img src="src/assets/images/logo.png" alt="Logo" class="logo">
-            </a>
-          <nav class="nav-links">
-              <a href="#" class="nav-button">Recipes</a>
-              <a href="#" class="nav-button">Add Recipe</a>
-          </nav>
-          <div class="auth-buttons">
-              <a href="signin.html" class="fancy-button">Login</a>
-              <a href="signup.html" class="fancy-button">Register</a>
-          </div>
-      </div>
-  </header>
-  
-  <section class="hero" style="height: 80vh;">
-    <div class="login-container">
-        <h3>Jenant... Fa-ti cont mai repede...</h3>
-        <form class="login-form">
-            <div class="form-group">
-                <input type="name" placeholder="Full Name" required>
-            </div>
-            <div class="form-group">
-                <input type="phone" placeholder="Telephone Number" required>
-            </div>
-            <div class="form-group">
-                <input type="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <input type="password_again" placeholder="Password Again" required>
-            </div>
-            <button type="submit" class="login-button">Sign Up</button>
-        </form>
-    </div>
-    </section>
-</body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

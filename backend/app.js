@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => {
-    res.send('buna');
-});
-PORT = 3000;
+const bodyParser = require('body-parser');
+const userRoutes = require('./routes/userRoutes');
+
+// Middleware
+app.use(bodyParser.json());
+
+// Routes
+app.use('/api/users', userRoutes);
+
+const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

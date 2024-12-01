@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="A Vite + React application" />
+    <meta name="keywords" content="Vite, React, JavaScript" />
+    <meta name="author" content="Baroana Cosmin George" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/vite.svg" />
+    <title>Vite + React</title>
+    <link rel="stylesheet" href="/assets/css/index.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css" /> 
+  </head>
+  <body>
+    <header>
+      <div class="nav-container">
+          <a href="/index.html">
+              <img src="/assets/images/logo.png" alt="Logo" class="logo">
+            </a>
+          <nav class="nav-links">
+              <a href="#" class="nav-button">Recipes</a>
+              <a href="#" class="nav-button">Add Recipe</a>
+          </nav>
+          <div class="auth-buttons" id="auth-buttons">
+              <!-- Buttons will be dynamically added here -->
+          </div>
+      </div>
+  </header>
+  
+  <section class="hero" style="height: 80vh;">
+    <div class="login-container">
+        <h3>Jenant... Fa-ti cont mai repede...</h3>
+        <form class="login-form" id="signup-form">
+            <div class="form-group">
+                <input type="name" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+                <input type="phone" placeholder="Telephone Number" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password_again" placeholder="Password Again" required>
+            </div>
+            <button type="submit" class="login-button">Sign Up</button>
+        </form>
+    </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const authButtons = document.getElementById('auth-buttons');
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+        if (isLoggedIn) {
+          authButtons.innerHTML = `
+            <a href="profile.html" class="fancy-button">Profile</a>
+            <a href="index.html" class="fancy-button" id="logout-button">Logout</a>
+          `;
+          document.getElementById('logout-button').addEventListener('click', () => {
+            localStorage.setItem('isLoggedIn', 'false');
+          });
+        } else {
+          authButtons.innerHTML = `
+            <a href="signin.html" class="fancy-button">Login</a>
+            <a href="signup.html" class="fancy-button">Register</a>
+          `;
+        }
+
+        const signupForm = document.getElementById('signup-form');
+        signupForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+    
+          const formData = new FormData(signupForm);
+          const data = {
+            fullName: formData.get('name'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            passwordAgain: formData.get('password_again')
+          };
+    
+          try {
+            const response = await fetch('https://your-backend-api.com/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            });
+    
+            if (response.ok) {
+              alert('User registered successfully!');
+              window.location.href = '/signin.html';
+            } else {
+              const errorData = await response.json();
+              alert(`Error: ${errorData.message}`);
+            }
+          } catch (error) {
+            alert('An error occurred. Please try again later.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
