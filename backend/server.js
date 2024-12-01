@@ -31,7 +31,7 @@ app.get('/user', async (req, res) => {
     res.status(200).json({ users });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: 'Unlucky, server error!' });
+    res.status(500).json({ message: 'unucky bro nu merge sercerul' });
   }
 });
 
@@ -42,7 +42,7 @@ app.get('/user/:id', async (req, res) => {
     res.status(200).json({ user });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: 'Error retrieving user info' });
+    res.status(500).json({ message: 'pff nicetry' });
   }
 });
 
@@ -64,7 +64,7 @@ app.post('/user', async (req, res) => {
 
     res.status(200).json({ user });
   } catch (error) {
-    console.log('Error during user creation', error.message);
+    console.log('haha fraiere nu e bine', error.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
@@ -80,7 +80,7 @@ app.put('/user/:id', async (req, res) => {
     res.status(200).json({ updatedUser });
   } catch (error) { 
     console.log(error.message);
-    res.status(500).json({ message: 'Server error, please check your request' });
+    res.status(500).json({ message: 'uneori trebuie sa te gandesti daca ai ce cauta aici sincer poti sa mergi si la alta facultate gen ASE' });
   }
 });
 
@@ -89,7 +89,7 @@ app.delete('/user/:id', async (req, res) => {
     const { id } = req.params;
     const user = await User.findByIdAndDelete(id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found in the database' });
+      return res.status(404).json({ message: 'nu esti in baza mea de date >< =(' });
     }
     res.status(200).json({ user });
   } catch (error) {
@@ -97,7 +97,7 @@ app.delete('/user/:id', async (req, res) => {
   }
 });
 
-// Login endpoint with password comparison using bcrypt
+// Login endpoint
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -121,12 +121,15 @@ app.post('/login', async (req, res) => {
 
     console.log(`Login successful for user: ${email}`);
 
-    // Generate JWT token after successful login
+    // E chestia aia cu tokenul care nu prea ai inteles ce face, las-o aici nu o modifica ca merge
+    //const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+    //res.status(200).json({ message: 'Login successful', token });
+    // Aceiasi chestie ca mai sus, dar mai usor de inteles
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       JWT_SECRET,
-      { expiresIn: '1h' } // Token expires in 1 hour
-    );
+      { expiresIn: '1h' }
+    )
 
     res.status(200).json({ message: 'Login successful', token });
 
@@ -143,7 +146,13 @@ mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.
       console.log(`Server is listening on port ${PORT}`);
     });
     console.log('Connected to the database');
-  })
-  .catch((err) => {
-    console.log('Error connecting to the database', err);
   });
+
+  
+// mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.mongodb.net/node-API?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+//   app.listen(PORT, () => {
+//     console.log(`Server is listening on port ${PORT}`);
+//   })
+//   .catch((err) => {
+//     console.log('Error connecting to the database', err);
+//   });

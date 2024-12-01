@@ -3,6 +3,11 @@ import emailIcon from '../assets/images/mail.png';
 import lockIcon from '../assets/images/lock.png';
 import { useNavigate } from 'react-router-dom';
 
+
+
+
+
+
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
@@ -37,13 +42,13 @@ function Login() {
       if (response.ok) {
         const result = await response.json();
         console.log('Login successful:', result);
+        console.log('User email:', formData.email);
         const { token } = result;
-        localStorage.setItem('token', token);  // Store token in localStorage
-        navigate('/');  // Redirect to the home page after successful login
+        localStorage.setItem('token', token);
+        navigate('/');
       } else {
-        const errorData = await response.json();
-        console.error('Login failed:', errorData);
-        setError(errorData.message || 'Login failed. Please try again.');
+        const error = await response.json();
+        console.error('Login failed:', error);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -58,8 +63,6 @@ function Login() {
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="label-container">Login NOW!!1!</h1>
-
-          {/* Error display */}
           {error && <div className="error-message">{error}</div>}
 
           <div className="form-group">
