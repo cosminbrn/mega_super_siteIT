@@ -13,8 +13,8 @@ function Login() {
     email: '',
     password: '',
   });
-  const [isLoading, setIsLoading] = useState(false);  // Loading state
-  const [error, setError] = useState(''); // Error state for login failure
+  const [isLoading, setIsLoading] = useState(false);  
+  const [error, setError] = useState(''); 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,8 +27,8 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);  // Set loading state to true
-    setError(''); // Reset previous errors
+    setIsLoading(true);  
+    setError(''); 
 
     try {
       const response = await fetch('http://localhost:3000/login', {
@@ -54,7 +54,7 @@ function Login() {
       console.error('Error:', error);
       setError('An unexpected error occurred. Please try again.');
     } finally {
-      setIsLoading(false);  // Reset loading state
+      setIsLoading(false);  
     }
   };
 

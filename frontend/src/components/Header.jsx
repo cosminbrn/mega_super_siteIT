@@ -12,7 +12,6 @@ function Header() {
     setIsLoggedIn(!!token); 
   }, [location]); 
 
-  // Logout handler
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false); 

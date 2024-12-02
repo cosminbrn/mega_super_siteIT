@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const Recipe = require('./models/Recipe');
 const cors = require('cors');
-const jwt = require('jsonwebtoken'); // Token handling
+const jwt = require('jsonwebtoken'); 
 const JWT_SECRET = 'amongus'; 
-const bcrypt = require('bcryptjs'); // Add bcryptjs for password hashing
+const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
 
@@ -22,7 +22,7 @@ app.use(cors(corsOptions));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'uploads')); // Corrected 'destination' spelling
+    cb(null, path.join(__dirname, 'uploads')); 
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -77,15 +77,15 @@ app.post('/user', async (req, res) => {
   try {
     const { username, email, phone, password } = req.body;
 
-    const salt = await bcrypt.genSalt(10); // Generate salt
-    const hashedPassword = await bcrypt.hash(password, salt); // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt); 
 
-    // Create the user with the hashed password
+    
     const user = await User.create({
       username,
       email,
       phone,
-      password: hashedPassword, // Store the hashed password
+      password: hashedPassword, 
     });
 
     res.status(200).json({ user });
@@ -166,7 +166,7 @@ app.delete('/user/:id', async (req, res) => {
   }
 });
 
-// Login endpoint
+
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -181,7 +181,7 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'User not found' });
     }
 
-    // Compare the provided password with the hashed password
+   
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {

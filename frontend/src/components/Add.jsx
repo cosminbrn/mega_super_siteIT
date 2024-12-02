@@ -7,7 +7,7 @@ function Add() {
         title: '',
         description: '',
         rating: 0, 
-        image: null, // Change from string to null for file handling
+        image: null, 
         author: '', 
     });
 
@@ -24,9 +24,8 @@ function Add() {
         }
 
         const decoded = jwtDecode(token);
-        const { userId } = decoded; // Extract userId from token
+        const { userId } = decoded; 
 
-        // Fetch user data
         const fetchUserData = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/user/${userId}`, {
@@ -43,7 +42,7 @@ function Add() {
                 const userData = await response.json();
                 setFormData((prevData) => ({
                     ...prevData,
-                    author: userData.user.username, // Assuming the response has 'username'
+                    author: userData.user.username, 
                 }));
             } catch (error) {
                 console.error('Error fetching user info:', error.message);
@@ -56,10 +55,9 @@ function Add() {
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (name === 'image') {
-            // Handle file input change
             setFormData((prevData) => ({
                 ...prevData,
-                [name]: files[0], // Set the first file
+                [name]: files[0], 
             }));
         } else {
             setFormData((prevData) => ({
@@ -75,15 +73,15 @@ function Add() {
         setIsLoading(true);
         setError('');
 
-        const formDataToSend = new FormData(); // Use FormData to send the file
+        const formDataToSend = new FormData(); 
 
-        // Append form fields
+   
         formDataToSend.append('title', formData.title);
         formDataToSend.append('description', formData.description);
         formDataToSend.append('rating', formData.rating);
         formDataToSend.append('author', formData.author);
 
-        // Append the file
+       
         if (formData.image) {
             formDataToSend.append('image', formData.image); 
         }
@@ -147,7 +145,7 @@ function Add() {
                         <label className="label-container">Upload Image</label>
                         <div className="input-wrapper">
                             <input
-                                type="file" // Change to type="file"
+                                type="file" 
                                 name="image"
                                 onChange={handleChange}
                                 required

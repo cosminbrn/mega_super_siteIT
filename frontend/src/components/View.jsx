@@ -34,8 +34,7 @@ function View() {
     }
 
     const extractImagePath = (absolutePath) => {
-        // Extract filename from the absolute path
-        const filename = absolutePath.split('\\').pop(); // Split and get the last part
+        const filename = absolutePath.split('\\').pop(); 
         return `http://localhost:3000/uploads/${filename}`;
       };
     
@@ -45,14 +44,14 @@ function View() {
                 <h1 className="label-container">{recipe.title}</h1> 
                 
                 <div className="info-group">
-                    <p><strong>Description:</strong> {recipe.description}</p> {/* Recipe Description */}
-                    <p><strong>Rating:</strong> {recipe.rating}</p> {/* Recipe Rating */}
+                    <p><strong>Description:</strong> {recipe.description}</p> 
+                    <p><strong>Rating:</strong> {recipe.rating}</p> 
                     {recipe.image && (
                         <div className="image-container">
                             <img src={extractImagePath(recipe.image)} alt={recipe.title} />
                         </div>
                     )}
-                    <p><strong>Author:</strong> {recipe.author}</p> {/* Recipe Author */}
+                    <p><strong>Author:</strong> {recipe.author}</p> 
                 </div>
             </div>
         </section>

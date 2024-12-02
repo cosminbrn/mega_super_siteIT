@@ -13,8 +13,8 @@ function Register() {
     password: '',
     confirmPassword: '',
   });
-  const [isLoading, setIsLoading] = useState(false);  // Added state for loading
-  const [error, setError] = useState(''); // Added state for error handling
+  const [isLoading, setIsLoading] = useState(false);  
+  const [error, setError] = useState(''); 
 
   const navigate = useNavigate();
 
@@ -34,8 +34,8 @@ function Register() {
       return;
     }
 
-    setIsLoading(true); // Set loading state to true
-    setError(''); // Reset previous errors
+    setIsLoading(true); 
+    setError(''); 
 
     try {
       const response = await fetch('http://localhost:3000/user', {
@@ -56,14 +56,14 @@ function Register() {
         return;
       }
 
-      const data = await response.json(); // Get response data
+      const data = await response.json(); 
       console.log('Registration successful:', data);
       navigate('/signin.html');
     } catch (error) {
       console.error('There was an error registering the user:', error.message);
       setError('Failed to register user. Please try again.');
     } finally {
-      setIsLoading(false); // Set loading state to false
+      setIsLoading(false); 
     }
   };
 
