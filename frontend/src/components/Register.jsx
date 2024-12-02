@@ -58,7 +58,7 @@ function Register() {
 
       const data = await response.json(); // Get response data
       console.log('Registration successful:', data);
-      navigate('/signin.html'); // Navigate to the login page after successful registration
+      navigate('/signin.html');
     } catch (error) {
       console.error('There was an error registering the user:', error.message);
       setError('Failed to register user. Please try again.');

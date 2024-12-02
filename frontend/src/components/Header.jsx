@@ -26,8 +26,16 @@ function Header() {
           <img src={logo} alt="Logo" className="logo" />
         </Link>
         <nav className="nav-links">
-          <Link to="/" className="nav-button">Recipes</Link>
+        {!isLoggedIn ? (
+          <>         
+            <Link to="/recipes.html" className="nav-button">Recipes</Link>
+          </>
+        ): (
+          <>
+          <Link to="/recipes.html" className="nav-button">Recipes</Link>
           <Link to="/addreci.html" className="nav-button">Add Recipe</Link>
+          </>
+        )}
         </nav>
 
         <div className="auth-buttons">

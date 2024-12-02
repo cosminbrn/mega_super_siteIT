@@ -1,11 +1,13 @@
 
 import React from 'react';
+import Add from '../components/Add';
+
 
 function AddRecipe() {
   return (
-    <div>
-      <h1>Add a New Recipe</h1>
-    </div>
+    <>
+      <Add />
+    </>
   );
 }
 

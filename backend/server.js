@@ -3,10 +3,13 @@ const app = express();
 const PORT = 3000;
 const mongoose = require('mongoose');
 const User = require('./models/User');
+const Recipe = require('./models/Recipe');
 const cors = require('cors');
 const jwt = require('jsonwebtoken'); // Token handling
 const JWT_SECRET = 'amongus'; 
 const bcrypt = require('bcryptjs'); // Add bcryptjs for password hashing
+const multer = require('multer');
+const path = require('path');
 
 const corsOptions = {
   origin: 'http://localhost:5000',
@@ -16,6 +19,19 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));  
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'uploads')); // Corrected 'destination' spelling
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({storage: storage});
+
+app.use('/uploads', express.static('uploads'));
 
 app.get('/', (req, res) => {
   res.send('Welcome to the homepage');
@@ -46,11 +62,21 @@ app.get('/user/:id', async (req, res) => {
   }
 });
 
+app.get('/recipes/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await Recipe.findById(id);
+    res.status(200).json({ recipe });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: 'pff nicetry' });
+  }
+});
+
 app.post('/user', async (req, res) => {
   try {
     const { username, email, phone, password } = req.body;
 
-    // Hash the password before saving
     const salt = await bcrypt.genSalt(10); // Generate salt
     const hashedPassword = await bcrypt.hash(password, salt); // Hash password
 
@@ -63,6 +89,49 @@ app.post('/user', async (req, res) => {
     });
 
     res.status(200).json({ user });
+  } catch (error) {
+    console.log('haha fraiere nu e bine', error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.delete('/recipe/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await Recipe.findByIdAndDelete(id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'nu esti in baza mea de date >< =(' });
+    }
+    res.status(200).json({ recipe });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/recipe', async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    res.status(200).json({ recipes });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message : 'nt nt nt nice try bro'});
+  }
+});
+
+app.post('/recipe', upload.single('image'), async (req, res) => {
+  try {
+    const { title, description, rating, author } = req.body;
+    const image = req.file ? `uploads/${req.file.filename}` : null;
+
+    const recipe = await Recipe.create({
+      title,
+      description,
+      rating,
+      image,
+      author,
+    })
+
+    res.status(200).json({ recipe});
   } catch (error) {
     console.log('haha fraiere nu e bine', error.message);
     res.status(500).json({ message: 'Internal server error' });
@@ -139,20 +208,11 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Connect to MongoDB and start server
-mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.mongodb.net/node-API?retryWrites=true&w=majority&appName=Cluster0')
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is listening on port ${PORT}`);
-    });
-    console.log('Connected to the database');
-  });
-
-  
-// mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.mongodb.net/node-API?retryWrites=true&w=majority&appName=Cluster0').then(() => {
-//   app.listen(PORT, () => {
-//     console.log(`Server is listening on port ${PORT}`);
-//   })
-//   .catch((err) => {
-//     console.log('Error connecting to the database', err);
-//   });
+mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.mongodb.net/node-API?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+  })
+  console.log('Connected to the database');
+}).catch((err) => {
+  console.log('Error connecting to the database');
+})

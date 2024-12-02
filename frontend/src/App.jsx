@@ -7,6 +7,8 @@ import AddRecipe from './pages/AddRecipe';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
+import Recipes from './pages/Recipes';
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
         <Route path="/signin.html" element={<SignIn />} />
         <Route path="/signup.html" element={<SignUp />} />
         <Route path="/profile.html" element={<Profile />} />
+        <Route path="/recipes.html" element={<Recipes />} />
       </Routes>
     </Router>
   );
