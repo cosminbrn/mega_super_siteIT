@@ -19,7 +19,7 @@ function Contact() {
       
             <div className="form-column">
           
-              <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
+              <textarea id="message" name="message-contact" placeholder="Your message here..." required></textarea>
               
               
             </div>

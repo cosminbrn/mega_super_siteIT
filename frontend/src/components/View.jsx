@@ -6,8 +6,8 @@ function View() {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOrder, setSortOrder] = useState('desc');
     const [activeDropdown, setActiveDropdown] = useState(null);
-    const [filterStars, setFilterStars] = useState(null); // Ensure this state is defined
-    const [review, setReview] = useState({ recipeId: null, rating: 0 }); // State for holding the current review
+    const [filterStars, setFilterStars] = useState(null); 
+    const [review, setReview] = useState({ recipeId: null, rating: 0 }); 
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -24,7 +24,7 @@ function View() {
                 }
 
                 const data = await response.json();
-                setRecipes(data.recipes); // Fetch all recipes
+                setRecipes(data.recipes); 
             } catch (error) {
                 console.error('Error fetching recipes:', error.message);
             }
@@ -55,20 +55,20 @@ function View() {
     };
 
     const handleStarClick = async (recipeId, rating) => {
-        setReview({ recipeId, rating }); // Update the selected rating
+        setReview({ recipeId, rating }); 
     };
 
     const handleSubmitReview = async () => {
         try {
             const { recipeId, rating } = review;
+            const reviewer = "Anonymous"; 
 
-            // Submit the rating and increment reviewCount
             const response = await fetch(`http://localhost:3000/recipe/${recipeId}/review`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ rating })
+                body: JSON.stringify({ reviewer, rating }) 
             });
 
             if (!response.ok) {
@@ -77,14 +77,12 @@ function View() {
 
             const updatedRecipe = await response.json();
 
-            // Update the recipe in the list with the new rating and review count
             setRecipes(prevRecipes =>
                 prevRecipes.map(recipe =>
-                    recipe._id === recipeId ? updatedRecipe : recipe
+                    recipe._id === recipeId ? updatedRecipe.recipe : recipe 
                 )
             );
 
-            // Reset the review state
             setReview({ recipeId: null, rating: 0 });
         } catch (error) {
             console.error('Error submitting review:', error.message);
@@ -102,7 +100,7 @@ function View() {
     
         for (let i = 0; i < 5; i++) {
             if (i < fullStars) {
-                // Full star
+                
                 stars.push(
                     <span 
                         key={i} 
@@ -113,7 +111,7 @@ function View() {
                     </span>
                 );
             } else if (hasHalfStar && i === fullStars) {
-                // Half star
+                
                 stars.push(
                     <span 
                         key={i} 
@@ -124,7 +122,7 @@ function View() {
                     </span>
                 );
             } else {
-                // Empty star
+                
                 stars.push(
                     <span 
                         key={i} 
@@ -209,7 +207,7 @@ function View() {
                                 </p>
                                 <p className="view-author">Author: <br></br> <strong className="view-author-name">{recipe.author}</strong></p> 
 
-                                {/* Add the review form */}
+                                \
                                 {review.recipeId === recipe._id ? (
                                     <div className="view-review-form">
                                         <h3>Submit your review:</h3>
@@ -222,15 +220,6 @@ function View() {
                                     <button onClick={() => setReview({ recipeId: recipe._id, rating: 0 })}>
                                         Leave a Review
                                     </button>
-                                )}
-                                {review.recipeId === recipe._id && (
-                                    <div className="view-review-form">
-                                        <h3>Submit your review:</h3>
-                                        <div className="view-rating-input">
-                                            {renderStars(recipe._id, review.rating)}
-                                        </div>
-                                        <button onClick={handleSubmitReview}>Submit Review</button>
-                                    </div>
                                 )}
                             </div>
                         </div>

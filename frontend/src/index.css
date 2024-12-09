@@ -616,8 +616,9 @@ h1 {
 }
 
 .contact-form textarea {
-  
+  font-family: 'Montserrat', sans-serif;
   border: 2px solid #009C41;
+  color: #009C41;
   font-size: 14px;
   height: 244px;
   width: 750px;
@@ -902,6 +903,13 @@ input:-webkit-autofill:focus {
 }
 
 input[name="first-name-contact"] {
+
+  font-size: 16px; 
+  font-family: 'Montserrat', sans-serif;
+  color: #009C41;
+}
+
+input[name="message-contact"] {
 
   font-size: 16px; 
   font-family: 'Montserrat', sans-serif;

@@ -145,7 +145,7 @@ body {
 .star {
     font-size: 1.2em;
     color: #ccc;
-    cursor: pointer; /* Make stars clickable */
+    cursor: pointer; 
     transition: color 0.2s ease-in-out;
 }
 
@@ -160,7 +160,7 @@ body {
 .star:hover,
 .star.filled:hover,
 .star.half-filled:hover {
-    color: #ffcc00; /* Change color on hover */
+    color: #ffcc00; 
 }
 
 .search-container {

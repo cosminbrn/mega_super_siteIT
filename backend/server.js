@@ -46,22 +46,20 @@ app.get('/user', async (req, res) => {
     const users = await User.find({});
     res.status(200).json({ users });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: 'unucky bro nu merge sercerul' });
+    res.status(500).json({ message: 'Internal server error: Unable to fetch users.' });
   }
 });
 
-app.get('/recipes/:id', async (req, res) => {
+app.get('/user/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const recipe = await Recipe.findById(id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
     }
-    res.status(200).json({ recipe });
+    res.status(200).json({ user });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: 'pff nicetry' });
+    res.status(500).json({ message: 'Internal server error: Unable to fetch user.' });
   }
 });
 
@@ -70,14 +68,30 @@ app.get('/recipes', async (req, res) => {
     const recipes = await Recipe.find({});
     res.status(200).json({ recipes });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: 'Failed to fetch recipes' });
+    res.status(500).json({ message: 'Internal server error: Unable to fetch recipes.' });
+  }
+});
+
+app.get('/recipes/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found.' });
+    }
+    res.status(200).json({ recipe });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error: Unable to fetch recipe.' });
   }
 });
 
 app.post('/user', async (req, res) => {
   try {
     const { username, email, phone, password } = req.body;
+
+    if (!username || !email || !phone || !password) {
+      return res.status(400).json({ message: 'All fields are required: username, email, phone, and password.' });
+    }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -91,90 +105,53 @@ app.post('/user', async (req, res) => {
 
     res.status(200).json({ user });
   } catch (error) {
-    console.log('haha fraiere nu e bine', error.message);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error: Unable to create user.' });
   }
 });
 
 app.post('/recipe', upload.single('image'), async (req, res) => {
   try {
-    const { title, description, rating = 0, author, reviewCount = 0 } = req.body;
+    const { title, description, author } = req.body;
     const image = req.file ? `uploads/${req.file.filename}` : null;
 
     const recipe = await Recipe.create({
       title,
       description,
-      rating,
-      image,
       author,
-      reviewCount,
+      image,
     });
 
     res.status(200).json({ recipe });
   } catch (error) {
-    console.log('Error creating recipe:', error.message);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error: Unable to create recipe.' });
   }
 });
 
-// Updating the recipe rating with weighted average calculation
-app.put('/recipe/:id/rating', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { rating } = req.body;
-
-    if (!rating || typeof rating !== 'number') {
-      return res.status(400).json({ message: 'Invalid rating value' });
-    }
-
-    const recipe = await Recipe.findById(id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
-
-    // Calculate the new weighted rating
-    const updatedRating = ((recipe.rating * recipe.reviewCount) + rating) / (recipe.reviewCount + 1);
-    const updatedReviewCount = recipe.reviewCount + 1;
-
-    const updatedRecipe = await Recipe.findByIdAndUpdate(id, {
-      rating: updatedRating,
-      reviewCount: updatedReviewCount,
-    }, { new: true });
-
-    res.status(200).json({ updatedRecipe });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// Increment reviewCount by 1 for a recipe
 app.put('/recipe/:id/review', async (req, res) => {
   try {
     const { id } = req.params;
-    const { rating } = req.body; // Get the new rating from the request body
+    const { reviewer, rating } = req.body;
 
-    // Find the recipe
-    const recipe = await Recipe.findById(id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
+    if (!reviewer || typeof rating === 'undefined') {
+      return res.status(400).json({ message: 'Reviewer and rating are required.' });
     }
 
-    // Calculate the new weighted rating
-    const updatedRating = ((recipe.rating * recipe.reviewCount) + rating) / (recipe.reviewCount + 1);
-    const updatedReviewCount = recipe.reviewCount + 1;
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found.' });
+    }
 
-    // Update the recipe
-    recipe.rating = updatedRating;
-    recipe.reviewCount = updatedReviewCount;
+    recipe.reviews.push({ reviewer, rating });
 
-    // Save the updated recipe
-    const updatedRecipe = await recipe.save();
+    const totalRatings = recipe.reviews.reduce((sum, review) => sum + review.rating, 0);
+    recipe.rating = totalRatings / recipe.reviews.length;
+    recipe.reviewCount = recipe.reviews.length;
 
-    res.status(200).json({ updatedRecipe });
+    await recipe.save();
+
+    res.status(200).json({ message: 'Review added successfully.', recipe });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error: Unable to add review.' });
   }
 });
 
@@ -183,29 +160,84 @@ app.delete('/recipe/:id', async (req, res) => {
     const { id } = req.params;
     const recipe = await Recipe.findByIdAndDelete(id);
     if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
+      return res.status(404).json({ message: 'Recipe not found.' });
     }
-    res.status(200).json({ recipe });
+    res.status(200).json({ message: 'Recipe deleted successfully.', recipe });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error: Unable to delete recipe.' });
   }
 });
 
 app.delete('/recipes', async (req, res) => {
   try {
     await Recipe.deleteMany({});
-    res.status(200).json({ message: 'All recipes deleted successfully' });
+    res.status(200).json({ message: 'All recipes deleted successfully.' });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: 'Failed to delete recipes' });
+    res.status(500).json({ message: 'Internal server error: Unable to delete recipes.' });
   }
 });
 
-mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.mongodb.net/node-API?retryWrites=true&w=majority&appName=Cluster0').then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-  });
-  console.log('Connected to the database');
-}).catch((err) => {
-  console.log('Error connecting to the database');
+app.put('/user/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, req.body, { new: true });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+    res.status(200).json({ message: 'User updated successfully.', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error: Unable to update user.' });
+  }
 });
+
+app.delete('/user/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+    res.status(200).json({ message: 'User deleted successfully.', user });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error: Unable to delete user.' });
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found.' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Incorrect password.' });
+    }
+
+    const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(200).json({ message: 'Login successful', token });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error: Unable to process login.' });
+  }
+});
+
+mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.mongodb.net/node-API?retryWrites=true&w=majority')
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is listening on port ${PORT}`);
+    });
+    console.log('Connected to the database');
+  })
+  .catch((err) => {
+    console.error('Error connecting to the database:', err.message);
+  });
