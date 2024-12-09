@@ -207,7 +207,6 @@ function View() {
                                 </p>
                                 <p className="view-author">Author: <br></br> <strong className="view-author-name">{recipe.author}</strong></p> 
 
-                                \
                                 {review.recipeId === recipe._id ? (
                                     <div className="view-review-form">
                                         <h3>Submit your review:</h3>
