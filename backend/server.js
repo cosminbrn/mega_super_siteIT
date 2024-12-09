@@ -5,31 +5,31 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const Recipe = require('./models/Recipe');
 const cors = require('cors');
-const jwt = require('jsonwebtoken'); 
-const JWT_SECRET = 'amongus'; 
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = 'amongus';
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
 
 const corsOptions = {
-  origin: 'http://localhost:5000',
+  origin: true,
   optionsSuccessStatus: 200,
   methods: ['GET, POST, PUT, DELETE'],
-}
+};
 
 app.use(express.json());
-app.use(cors(corsOptions));  
+app.use(cors(corsOptions));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'uploads')); 
+    cb(null, path.join(__dirname, 'uploads'));
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
-  }
+  },
 });
 
-const upload = multer({storage: storage});
+const upload = multer({ storage: storage });
 
 app.use('/uploads', express.static('uploads'));
 
@@ -51,25 +51,27 @@ app.get('/user', async (req, res) => {
   }
 });
 
-app.get('/user/:id', async (req, res) => {
+app.get('/recipes/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id);
-    res.status(200).json({ user });
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+    res.status(200).json({ recipe });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ message: 'pff nicetry' });
   }
 });
 
-app.get('/recipes/:id', async (req, res) => {
+app.get('/recipes', async (req, res) => {
   try {
-    const { id } = req.params;
-    const recipe = await Recipe.findById(id);
-    res.status(200).json({ recipe });
+    const recipes = await Recipe.find({});
+    res.status(200).json({ recipes });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: 'pff nicetry' });
+    res.status(500).json({ message: 'Failed to fetch recipes' });
   }
 });
 
@@ -78,14 +80,13 @@ app.post('/user', async (req, res) => {
     const { username, email, phone, password } = req.body;
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt); 
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    
     const user = await User.create({
       username,
       email,
       phone,
-      password: hashedPassword, 
+      password: hashedPassword,
     });
 
     res.status(200).json({ user });
@@ -95,32 +96,9 @@ app.post('/user', async (req, res) => {
   }
 });
 
-app.delete('/recipe/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const recipe = await Recipe.findByIdAndDelete(id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'nu esti in baza mea de date >< =(' });
-    }
-    res.status(200).json({ recipe });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-app.get('/recipe', async (req, res) => {
-  try {
-    const recipes = await Recipe.find({});
-    res.status(200).json({ recipes });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message : 'nt nt nt nice try bro'});
-  }
-});
-
 app.post('/recipe', upload.single('image'), async (req, res) => {
   try {
-    const { title, description, rating, author } = req.body;
+    const { title, description, rating = 0, author, reviewCount = 0 } = req.body;
     const image = req.file ? `uploads/${req.file.filename}` : null;
 
     const recipe = await Recipe.create({
@@ -129,90 +107,105 @@ app.post('/recipe', upload.single('image'), async (req, res) => {
       rating,
       image,
       author,
-    })
+      reviewCount,
+    });
 
-    res.status(200).json({ recipe});
+    res.status(200).json({ recipe });
   } catch (error) {
-    console.log('haha fraiere nu e bine', error.message);
+    console.log('Error creating recipe:', error.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-app.put('/user/:id', async (req, res) => {
+// Updating the recipe rating with weighted average calculation
+app.put('/recipe/:id/rating', async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id, req.body);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+    const { rating } = req.body;
+
+    if (!rating || typeof rating !== 'number') {
+      return res.status(400).json({ message: 'Invalid rating value' });
     }
-    const updatedUser = await User.findById(id);
-    res.status(200).json({ updatedUser });
-  } catch (error) { 
+
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    // Calculate the new weighted rating
+    const updatedRating = ((recipe.rating * recipe.reviewCount) + rating) / (recipe.reviewCount + 1);
+    const updatedReviewCount = recipe.reviewCount + 1;
+
+    const updatedRecipe = await Recipe.findByIdAndUpdate(id, {
+      rating: updatedRating,
+      reviewCount: updatedReviewCount,
+    }, { new: true });
+
+    res.status(200).json({ updatedRecipe });
+  } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: 'uneori trebuie sa te gandesti daca ai ce cauta aici sincer poti sa mergi si la alta facultate gen ASE' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-app.delete('/user/:id', async (req, res) => {
+// Increment reviewCount by 1 for a recipe
+app.put('/recipe/:id/review', async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
-    if (!user) {
-      return res.status(404).json({ message: 'nu esti in baza mea de date >< =(' });
+    const { rating } = req.body; // Get the new rating from the request body
+
+    // Find the recipe
+    const recipe = await Recipe.findById(id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
     }
-    res.status(200).json({ user });
+
+    // Calculate the new weighted rating
+    const updatedRating = ((recipe.rating * recipe.reviewCount) + rating) / (recipe.reviewCount + 1);
+    const updatedReviewCount = recipe.reviewCount + 1;
+
+    // Update the recipe
+    recipe.rating = updatedRating;
+    recipe.reviewCount = updatedReviewCount;
+
+    // Save the updated recipe
+    const updatedRecipe = await recipe.save();
+
+    res.status(200).json({ updatedRecipe });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.delete('/recipe/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const recipe = await Recipe.findByIdAndDelete(id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+    res.status(200).json({ recipe });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required' });
-  }
-
+app.delete('/recipes', async (req, res) => {
   try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(400).json({ error: 'User not found' });
-    }
-
-   
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(400).json({ error: 'Incorrect password' });
-    }
-
-    console.log(`Login successful for user: ${email}`);
-
-    // E chestia aia cu tokenul care nu prea ai inteles ce face, las-o aici nu o modifica ca merge
-    //const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
-    //res.status(200).json({ message: 'Login successful', token });
-    // Aceiasi chestie ca mai sus, dar mai usor de inteles
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      JWT_SECRET,
-      { expiresIn: '1h' }
-    )
-
-    res.status(200).json({ message: 'Login successful', token });
-
+    await Recipe.deleteMany({});
+    res.status(200).json({ message: 'All recipes deleted successfully' });
   } catch (error) {
-    console.error('Error during login:', error);
-    res.status(500).json({ error: 'Server error' });
+    console.log(error.message);
+    res.status(500).json({ message: 'Failed to delete recipes' });
   }
 });
 
 mongoose.connect('mongodb+srv://cosminbaroana06:JaJK8NuLCziLf0H6@cluster0.nfmul.mongodb.net/node-API?retryWrites=true&w=majority&appName=Cluster0').then(() => {
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
-  })
+  });
   console.log('Connected to the database');
 }).catch((err) => {
   console.log('Error connecting to the database');
-})
+});

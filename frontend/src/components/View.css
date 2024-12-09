@@ -1,0 +1,257 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.recipes-page-container {
+    background-color: #f0f0f0;
+    background-image: url('src/assets/images/Mesa\ de\ trabajo\ 1\ 1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100em;
+    max-height: 100em;
+}
+
+.view-section-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.view-top-bar {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-button-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.view-grid-container {
+    display: grid;
+    grid-template-columns: 250px 250px 250px 250px 250px;
+    gap: 40px 20px;
+    width: 100%;
+    max-height: 85em;
+    margin: 10px;
+    box-sizing: border-box;
+    overflow: auto;
+    padding-bottom: 20px;
+}
+
+.view-info-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.view-image-container img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.view-recipe-header-container {
+    height: 250px;
+    font-size: 1.2em;
+    border-bottom: 3px solid #00c763;
+}
+
+.view-info-group {
+    height: 250px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+}
+
+.view-label-container {
+    font-size: 1.6em;
+    margin: 10px 0;
+}
+
+.view-filter-button,
+.view-sort-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.view-filter-button {
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.view-filter-button:hover {
+    background-color: #218838;
+}
+
+.view-sort-button {
+    background-color: #ffc107;
+    color: #212529;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.view-sort-button:hover {
+    background-color: #e0a800;
+}
+
+.view-review-count {
+    font-size: 16px;
+}
+
+.view-author {
+    font-size: 12px;
+}
+
+.view-author-name {
+    font-size: 20px;
+}
+
+.star {
+    font-size: 1.2em;
+    color: #ccc;
+    cursor: pointer; /* Make stars clickable */
+    transition: color 0.2s ease-in-out;
+}
+
+.star.filled {
+    color: #ffcc00;
+}
+
+.star.half-filled {
+    color: #ffcc00;
+}
+
+.star:hover,
+.star.filled:hover,
+.star.half-filled:hover {
+    color: #ffcc00; /* Change color on hover */
+}
+
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.view-search-bar {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    border: 2px solid #3f3f3f;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.view-search-bar:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+input[name="view-search"]::placeholder {
+    color: #3f3f3f;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.view-sort-dropdown,
+.view-filter-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.view-sort-options,
+.view-filter-options {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.view-sort-option,
+.view-filter-option {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.view-sort-option:hover,
+.view-filter-option:hover {
+    background-color: #ddd;
+}
+
+.view-review-form {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-bar,
+    .filter-button,
+    .sort-button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Register from '../components/Register'; // Ensure this path is correct
+import Register from '../components/Register'; 
 
 function SignUp() {
   return (

@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import emailIcon from '../assets/images/mail.png';
 import lockIcon from '../assets/images/lock.png';
 import { useNavigate } from 'react-router-dom';
-
-
-
-
-
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -16,6 +11,24 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);  
   const [error, setError] = useState(''); 
   const navigate = useNavigate();
+
+  const addAutofillClass = (input) => {
+    if (input.value) {
+      input.classList.add('autofill');
+    }
+  };
+
+  useEffect(() => {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      addAutofillClass(input);
+      input.addEventListener('focus', () => {
+        setTimeout(() => {
+          addAutofillClass(input);
+        }, 100); 
+      });
+    });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +60,7 @@ function Login() {
         localStorage.setItem('token', token);
         navigate('/');
       } else {
+        alert('Login failed. Please try again.');
         const error = await response.json();
         console.error('Login failed:', error);
       }
@@ -59,29 +73,29 @@ function Login() {
   };
 
   return (
-    <section className="hero">
-      <div className="login-container">
-        <form onSubmit={handleSubmit} className="login-form">
-          <h1 className="label-container">Login NOW!!1!</h1>
+    <section className="hero" autocomplete="off">
+      <div className="login-container" autocomplete="off">
+        <form onSubmit={handleSubmit} className="login-form" autocomplete="off">
+          <h1>Loghează-te, chiorăie mațele!</h1>
           {error && <div className="error-message">{error}</div>}
-
-          <div className="form-group">
-            <label className="label-container">Email:</label>
-            <div className="input-wrapper">
-              <img src={emailIcon} alt="email" className="input-icon" />
+          <p></p><p><p></p></p>
+          <p></p>
+          <div className="form-group" autocomplete="off">
+            <div className="input-wrapper" autocomplete="off" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={emailIcon} alt="email" className="input-icon" autocomplete="off"/>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
+                placeholder="E-mail"
+                autocomplete="off"
               />
             </div>
           </div>
-
-          <div className="form-group">
-            <label className="label-container">Password:</label>
-            <div className="input-wrapper">
+          <div className="form-group" autocomplete="off">
+            <div className="input-wrapper" autocomplete="off" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img src={lockIcon} alt="lock" className="input-icon" />
               <input
                 type="password"
@@ -89,13 +103,16 @@ function Login() {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                placeholder="Password"
+                autocomplete="off"
               />
             </div>
           </div>
-
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Logging in...' : 'Login'}
-          </button>
+          <div className="baka-div">
+            <button className="button-login" type="submit" disabled={isLoading} >
+              {isLoading ? 'Logging in...' : 'Log in'}
+            </button>
+          </div>
         </form>
       </div>
     </section>

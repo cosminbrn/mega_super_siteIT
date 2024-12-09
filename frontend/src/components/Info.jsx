@@ -67,25 +67,36 @@ function Info() {
     } 
     return (
         <div>
-            <section className="hero">
+            <section className="hero-grid">
                 <div className="info-container">
                         <img src={chef} alt="Chef"></img>
-                        <div className="info-group">
-                            <strong>Name:</strong> { user.username }
+                        <p></p>
+                        <div className="output-field">
+                            <strong>Name:&nbsp;&nbsp;&nbsp;</strong> { user.username }
                         </div>
+                        <hr></hr>
                 </div>
                 <div className="info-container">
-                    <h3>User Info</h3>
-                        <div className="info-group">
-                            <strong>Email:</strong> { user.email }
-                        </div>
-                        <div className="info-group">
-                            <strong>Telephone:</strong> {user.phone || 'ma sincud nu merge'}
-                        </div>
-                        <div className="info-group">
-                            <strong>Group:</strong> 313CA
-                        </div>
+                        <br></br>
+                            <div id="email" class="output-field">
+                                <strong>E-mail:&nbsp;&nbsp;&nbsp;</strong>{ user.email }
+                            </div>
+                        
+                        <hr></hr>
+                        <br></br>
+                            <div id="telephone" class="output-field">
+                                <strong>Telephone:&nbsp;&nbsp;&nbsp;</strong>{ user.phone }
+                            </div>
+                        <hr></hr>
+                        <br></br>
+                            <div id="group" class="output-field">
+                                <strong>Group:&nbsp;&nbsp;&nbsp;</strong> 313CA
+                            </div>
+                        <hr></hr>
                 </div>
+                <Link to='/addreci.html' className="button-grid">
+                    Add a recipe
+                </Link>
             </section>
         </div>
     );

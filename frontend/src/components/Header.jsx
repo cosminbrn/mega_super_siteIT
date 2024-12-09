@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
-import './Header.css';
+
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,8 +18,28 @@ function Header() {
     console.log('Logged out');
   };
 
+  const registerClass =
+    location.pathname === '/signup.html' ? 'button login' : 'button register';
+
+  const loginClass =
+    ((location.pathname === '/signin.html') || (location.pathname === '/')) ? 'button login' : 'button register';
+  
+  const recipesClass =
+    location.pathname === '/recipes.html' ? 'button login' : 'button register';
+
+  const addClass =
+    location.pathname === '/addreci.html' ? 'button login' : 'button register';
+
+  const profileClass =
+    location.pathname === '/profile.html' ? 'button login' : 'button register';
+
   return (
-    <header>
+    <header className="header">
+      <div className="header-corner-trick-left"></div>
+      <div className="header-corner-trick-left-2"></div>
+      <div className="header-corner-trick-right"></div>
+      <div className="header-corner-trick-right-2"></div>
+
       <div className="nav-container">
         <Link to="/">
           <img src={logo} alt="Logo" className="logo" />
@@ -27,27 +47,30 @@ function Header() {
         <nav className="nav-links">
         {!isLoggedIn ? (
           <>         
-            <Link to="/recipes.html" className="nav-button">Recipes</Link>
+            <Link to="/recipes.html" className={ recipesClass }>Recipes</Link>
+            <div className="spacer"></div>
           </>
         ): (
           <>
-          <Link to="/recipes.html" className="nav-button">Recipes</Link>
-          <Link to="/addreci.html" className="nav-button">Add Recipe</Link>
+          <Link to="/recipes.html" className={ recipesClass }>Recipes</Link>
+          <Link to="/addreci.html" className={ addClass }>Add Recipe</Link>
+          <div className = "spacer"></div>
           </>
         )}
         </nav>
 
-        <div className="auth-buttons">
+        <div>
           {!isLoggedIn ? (
-            <>
-              <Link to="/signin.html" className="fancy-button" id="login-button">Login</Link>
-              <Link to="/signup.html" className="fancy-button" id="signup-button">Sign Up</Link>
-            </>
+            <div className="nav-links">
+              <Link to="/signin.html" className={ loginClass } id="login-button">Login</Link>
+              <Link to="/signup.html" className={ registerClass } id="signup-button">Register</Link>
+            </div>
           ):(
-            <>
-              <Link to="/profile.html" className="fancy-button" id="profile-button">Profile</Link>
-              <Link to="/signin.html" className="fancy-button" id="profile-button" onClick={handleLogout}>Logout</Link>
-            </> 
+            <div className="nav-buttons">
+              <Link to="/signin.html" className="button login" id="profile-button" onClick={handleLogout}>Logout</Link>
+              <Link to="/profile.html" className={ profileClass } id="profile-button">Profile</Link>
+              
+            </div> 
           )}
         </div>
       </div>

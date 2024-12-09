@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import upload_button from '../assets/images/upload_button.png';
 
 function Add() {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        rating: 0, 
+        rating: 3, 
         image: null, 
         author: '', 
     });
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [recipes, setRecipes] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
-            alert('You are not authenticated. Redirecting to sign-in...');
             navigate('/signin.html');
             return;
         }
@@ -112,16 +113,16 @@ function Add() {
 
     return (
         <section className="hero">
-            <div className="login-container">
+            <div className="add-container">
                 <form onSubmit={handleSubmit} className="login-form">
-                    <h1 className="label-container">Add Recipe</h1>
                     {error && <div className="error-message">{error}</div>}
 
-                    <div className="form-group">
-                        <label className="label-container">Title:</label>
+                    <div className="add-group">
+                        
                         <div className="input-wrapper">
                             <input
                                 name="title"
+                                placeholder='Recipe name:'
                                 value={formData.title}
                                 onChange={handleChange}
                                 required
@@ -129,10 +130,10 @@ function Add() {
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label className="label-container">Description</label>
+                    <div className="add-group">
                         <div className="input-wrapper">
                             <input
+                                placeholder='Description:'
                                 name="description"
                                 value={formData.description} 
                                 onChange={handleChange}
@@ -141,20 +142,24 @@ function Add() {
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label className="label-container">Upload Image</label>
-                        <div className="input-wrapper">
-                            <input
-                                type="file" 
-                                name="image"
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
+                    <div className="add-group">
+                        
+                        <label htmlFor="image-upload" className="image-label">
+                            <img src={upload_button} alt="Click to upload" className="upload-image" />
+                        </label>
+                        <input 
+                            type="file" 
+                            id="image-upload" 
+                            className="hidden-input" 
+                            accept="image/*" 
+                            name="image"
+                            onChange={handleChange}
+                        />
+                        
                     </div>
 
-                    <button type="submit" disabled={isLoading}>
-                        {isLoading ? 'Submitting...' : 'Submit'}
+                    <button type="submit" disabled={isLoading} className="button-login">
+                        {isLoading ? 'Submitting...' : 'Add recipe'}
                     </button>
                 </form>
             </div>
